@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriGrow - AI & IoT for Precision Farming</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">🌱</div>
+          AgriGrow
+        </div>
+        <div class="nav-tabs">
+          <button class="nav-tab active" onclick="switchTab('dashboard')">
+            Dashboard
+          </button>
+          <button class="nav-tab" onclick="switchTab('ai-assistant')">
+            AI Assistant
+          </button>
+          <button class="nav-tab" onclick="switchTab('mobile-app')">
+            Mobile App
+          </button>
+          <button class="nav-tab" onclick="switchTab('analytics')">
+            Analytics
+          </button>
+          <button class="nav-tab" onclick="switchTab('about')">About</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Dashboard Tab -->
+      <div id="dashboard" class="tab-content active">
+        <h1 style="color: white; text-align: center; margin-bottom: 2rem">
+          AgriGrow Dashboard - Real-time Farm Monitoring
+        </h1>
+
+        <div class="dashboard-grid">
+          <div class="card sensor-card">
+            <div class="card-header">
+              <div class="card-icon">🌡️</div>
+              <h3>Soil & Environment Sensors</h3>
+            </div>
+            <div class="metric">
+              <span>Soil Moisture</span>
+              <span class="metric-value status-good" id="soilMoisture"
+                >72%</span
+              >
+            </div>
+            <div class="metric">
+              <span>Temperature</span>
+              <span class="metric-value" id="temperature">28°C</span>
+            </div>
+            <div class="metric">
+              <span>Humidity</span>
+              <span class="metric-value" id="humidity">65%</span>
+            </div>
+            <div class="metric">
+              <span>Light Intensity</span>
+              <span class="metric-value" id="lightIntensity">850 LUX</span>
+            </div>
+            <div class="metric">
+              <span>pH Level</span>
+              <span class="metric-value status-warning" id="phLevel">6.8</span>
+            </div>
+          </div>
+
+          <div class="card weather-card">
+            <div class="card-header">
+              <div class="card-icon">🌤️</div>
+              <h3>Weather Forecast</h3>
+            </div>
+            <div class="metric">
+              <span>Today's Weather</span>
+              <span class="metric-value">Partly Cloudy</span>
+            </div>
+            <div class="metric">
+              <span>Rain Probability</span>
+              <span class="metric-value status-warning">65%</span>
+            </div>
+            <div class="metric">
+              <span>Wind Speed</span>
+              <span class="metric-value">12 km/h</span>
+            </div>
+            <div class="metric">
+              <span>UV Index</span>
+              <span class="metric-value status-critical">8 (High)</span>
+            </div>
+          </div>
+
+          <div class="card ai-card">
+            <div class="card-header">
+              <div class="card-icon">🤖</div>
+              <h3>AI Recommendations</h3>
+            </div>
+            <div class="recommendation-item">
+              <strong>Irrigation Alert:</strong> Skip watering today. Rain
+              expected in 4 hours.
+            </div>
+            <div class="recommendation-item">
+              <strong>Fertilizer:</strong> Apply nitrogen fertilizer in 2 days
+              for optimal growth.
+            </div>
+            <div class="recommendation-item">
+              <strong>Pest Control:</strong> Monitor for aphids. Risk level:
+              Medium.
+            </div>
+          </div>
+
+          <div class="card alert-card">
+            <div class="card-header">
+              <div class="card-icon">⚠️</div>
+              <h3>Active Alerts</h3>
+            </div>
+            <div class="metric">
+              <span>🌧️ Heavy Rain Warning</span>
+              <span class="metric-value status-critical">Next 6 hrs</span>
+            </div>
+            <div class="metric">
+              <span>🌿 Crop Health</span>
+              <span class="metric-value status-good">Good</span>
+            </div>
+            <div class="metric">
+              <span>💰 Cost Savings</span>
+              <span class="metric-value status-good">₹2,400 this month</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommendation-card">
+          <h3>🎯 Today's Smart Farming Actions</h3>
+          <div class="recommendation-item">
+            <strong>Morning (6 AM):</strong> Check crop for pest damage in north
+            field
+          </div>
+          <div class="recommendation-item">
+            <strong>Afternoon (2 PM):</strong> Avoid irrigation - rain predicted
+            at 4 PM
+          </div>
+          <div class="recommendation-item">
+            <strong>Evening (6 PM):</strong> Prepare drainage channels for heavy
+            rain
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="sensorChart"></canvas>
+        </div>
+      </div>
+
+      <!-- AI Assistant Tab -->
+      <div id="ai-assistant" class="tab-content">
+        <h1 style="color: white; text-align: center; margin-bottom: 2rem">
+          AI Farming Assistant - Multilingual Support
+        </h1>
+
+        <div class="language-selector">
+          <label for="language" style="color: white; margin-right: 1rem"
+            >Select Language:</label
+          >
+          <select id="language" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+          </select>
+        </div>
+
+        <div class="chat-container">
+          <div class="chat-header">
+            <div>🤖 AgriGrow AI Assistant</div>
+            <div style="font-size: 12px; margin-top: 5px">
+              Ask me anything about farming, weather, or crop care!
+            </div>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+              <strong>AgriGrow AI:</strong> Namaste! I'm your farming assistant.
+              How can I help you today? You can ask about weather, crop care,
+              fertilizers, or pest control.
+            </div>
+          </div>
+          <div class="chat-input">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask me about farming..."
+              onkeypress="handleEnter(event)"
+            />
+            <div class="voice-controls">
+              <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">
+                🎤
+              </button>
+            </div>
+            <button onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem">
+          <h3 style="color: white">💡 Common Questions:</h3>
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem"
+          >
+            <button
+              class="btn btn-secondary"
+              onclick="askPredefinedQuestion('weather')"
+            >
+              Weather forecast
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="askPredefinedQuestion('irrigation')"
+            >
+              When to irrigate?
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="askPredefinedQuestion('fertilizer')"
+            >
+              Fertilizer advice
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="askPredefinedQuestion('pest')"
+            >
+              Pest control
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="askPredefinedQuestion('crop')"
+            >
+              Crop health
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile App Tab -->
+      <div id="mobile-app" class="tab-content">
+        <h1 style="color: white; text-align: center; margin-bottom: 2rem">
+          AgriGrow Mobile App Preview
+        </h1>
+
+        <div class="mobile-app-preview">
+          <div class="mobile-screen">
+            <div class="mobile-header">
+              <h3>🌱 AgriGrow</h3>
+              <p>Smart Farming Assistant</p>
+            </div>
+
+            <div class="mobile-card">
+              <h4>🌡️ Current Conditions</h4>
+              <p>Temperature: 28°C</p>
+              <p>Soil Moisture: 72%</p>
+              <p>Status: <span style="color: green">Optimal</span></p>
+            </div>
+
+            <div class="mobile-card">
+              <h4>🤖 AI Recommendation</h4>
+              <p>"बारिश के कारण आज पानी न दें। 4 घंटे में बारिश होगी।"</p>
+              <small
+                >(Don't water today due to rain. Rain expected in 4
+                hours.)</small
+              >
+            </div>
+
+            <div class="mobile-card">
+              <h4>📊 This Week's Summary</h4>
+              <p>Water saved: 200L</p>
+              <p>Cost saved: ₹150</p>
+              <p>Yield prediction: +15%</p>
+            </div>
+
+            <div class="mobile-card">
+              <h4>⚡ Quick Actions</h4>
+              <button class="btn btn-primary" style="margin: 0.2rem">
+                📷 Scan Crop
+              </button>
+              <button class="btn btn-secondary" style="margin: 0.2rem">
+                🎤 Voice Query
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; color: white; text-align: center">
+          <h3>📱 App Features</h3>
+          <div class="impact-stats">
+            <div class="stat-card">
+              <div class="stat-number">15+</div>
+              <div>Regional Languages</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">24/7</div>
+              <div>AI Support</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">95%</div>
+              <div>Offline Capability</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">Voice</div>
+              <div>First Interface</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div id="analytics" class="tab-content">
+        <h1 style="color: white; text-align: center; margin-bottom: 2rem">
+          Farm Analytics & Insights
+        </h1>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>📈 Yield Prediction</h3>
+            <div class="chart-container">
+              <canvas id="yieldChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>💧 Water Usage Optimization</h3>
+            <div class="chart-container">
+              <canvas id="waterChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>🌱 Crop Health Timeline</h3>
+            <div class="chart-container">
+              <canvas id="healthChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>💰 Cost Savings</h3>
+            <div class="metric">
+              <span>Water Bills</span>
+              <span class="metric-value status-good">-25%</span>
+            </div>
+            <div class="metric">
+              <span>Fertilizer Usage</span>
+              <span class="metric-value status-good">-18%</span>
+            </div>
+            <div class="metric">
+              <span>Pesticide Usage</span>
+              <span class="metric-value status-good">-30%</span>
+            </div>
+            <div class="metric">
+              <span>Total Savings</span>
+              <span class="metric-value status-good">₹15,000/month</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Tab -->
+      <div id="about" class="tab-content">
+        <h1 style="color: white; text-align: center; margin-bottom: 2rem">
+          About AgriGrow
+        </h1>
+
+        <div class="card">
+          <h2>🎯 Problem Statement</h2>
+          <p>
+            Over 60% of Indian farmers lack timely, accurate information about
+            soil health, crop needs, pest control, and weather — leading to
+            inefficient farming, lower yields, and increased resource waste.
+            Most tools are complex, English-based, and inaccessible to
+            small-scale farmers.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>🚀 Our Solution</h2>
+          <p>
+            AgriGrow is an AI Agent-powered platform that combines AI + IoT +
+            real-time analytics to help farmers make smarter decisions. It
+            provides localized, voice/text-based recommendations in regional
+            languages to improve crop productivity, conserve resources, and
+            boost income.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>🛠️ Technology Stack</h2>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 1rem;
+              margin-top: 1rem;
+            "
+          >
+            <div>
+              <h4>AI/ML</h4>
+              <p>TensorFlow, PyTorch, Scikit-learn</p>
+            </div>
+            <div>
+              <h4>IoT</h4>
+              <p>Arduino, ESP32, MQTT, Node-RED</p>
+            </div>
+            <div>
+              <h4>Backend</h4>
+              <p>Node.js, Python, MongoDB</p>
+            </div>
+            <div>
+              <h4>Frontend</h4>
+              <p>React Native, Flutter</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="impact-stats">
+          <div class="stat-card">
+            <div class="stat-number">30%</div>
+            <div>Yield Increase</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">25%</div>
+            <div>Water Savings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">20%</div>
+            <div>Cost Reduction</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">1M+</div>
+            <div>Farmers Empowered</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>👤 User Persona: Meet Ramesh</h2>
+          <p>
+            <strong>Ramesh</strong>, a 48-year-old maize farmer from Bihar,
+            doesn't read English and owns a basic Android phone. He needs
+            guidance on fertilizer timing & pest control.
+          </p>
+          <p><strong>AgriGrow provides him:</strong></p>
+          <ul style="margin-top: 1rem">
+            <li>
+              Voice alert in Bhojpuri: "Agle 24 ghante mein baarish hogi. Aaj
+              paani mat dena."
+            </li>
+            <li>Visual icon + audio cue to reduce fertilizer usage</li>
+            <li>Weekly summary of crop progress and savings</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2025 AgriGrow - Empowering Indian Farmers with AI & IoT</p>
+      <p>
+        Built for Social Impact • Digital India • Smart Villages • Climate
+        Action
+      </p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
