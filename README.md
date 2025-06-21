@@ -77,7 +77,8 @@ Farming in India is facing challenges:
 
 ## 🙌 Team AgriGrow
 
-- **Shubhang Shrivastav** – AI & Full Stack Developer  
+- **Shubhang Shrivastav** – AI & Full Stack Developer
+- Link- https://shubhangthepro.github.io/AgriGrow/
 - [GitHub](https://github.com/Shubhangthepro) | [LinkedIn](https://www.linkedin.com/in/shubhang-shrivastav-a89306267)
 
 ---
